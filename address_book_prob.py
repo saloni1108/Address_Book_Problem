@@ -23,29 +23,45 @@ class Contact:
         self.email = email
     
     def __str__(self):
-        return "Name: {self.first_name} {self.last_name}\nAddress: {self.address}, {self.city}, {self.state}, {self.zip_code}\nPhone Number: {self.phone_number}\nE-mail: {self.email}"
+        return f"Name: {self.first_name} {self.last_name} \n Address: {self.address}, {self.city}, {self.state}, {self.zip_code} \n Phone Number: {self.phone_number} \n E-mail: {self.email}"
 
-def add_contact(): 
-    logger.info("ADDRESS BOOK STARTED...")
-    first_name = input("Enter the first name: ")
-    last_name = input("Enter the last name: ")
-    address = input("Enter the address: ")
-    city = input("Enter the city of the following address: ")
-    state = input("Enter the state: ")
-    zip_code = input("Enter the postal code: ")
-    phone_number = input("Enter a 10-digit phone number: ")
-    email = input("Enter an email id: ")
+class AddressBook:
+    def __init__(self):
+        self.address_book = []
 
-    contact_1 = Contact(first_name, last_name, address, city, state, zip_code, phone_number, email)
-    logger.info("New Contact Added: ", contact_1)
+    def add_contact(self): 
+        logger.info("ADDRESS BOOK STARTED...")
+        first_name = input("Enter the first name: ")
+        last_name = input("Enter the last name: ")
+        address = input("Enter the address: ")
+        city = input("Enter the city of the following address: ")
+        state = input("Enter the state: ")
+        zip_code = input("Enter the postal code: ")
+        phone_number = input("Enter a 10-digit phone number: ")
+        email = input("Enter an email id: ")
+
+        contact_1 = Contact(first_name, last_name, address, city, state, zip_code, phone_number, email)
+        self.address_book.append(contact_1)
+        logger.info("New Contact Added: %s", contact_1)
 
 
 def main():
-    try:
         logger.info("Address Book Started...")
-        add_contact()
-    except Exception as e:
-        logger.error("An Error Occured: %s", e)
+        while True:
+            print("1. Add contact \n 2. Exit")
+            choice = int(input("Enter the choice: "))
+            try:
+                if choice == 1:
+                    address_book = AddressBook()
+                    address_book.add_contact()
+                elif choice == 2:
+                    logging.info("Address Book Closed")
+                    break
+                else:
+                    raise ValueError("Wrong input entered")
+            except ValueError as ve:
+                logging.error("Error occurred: " + str(ve))
+
 
 if __name__ == "__main__":
     main()
