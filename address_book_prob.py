@@ -4,7 +4,6 @@ Address Book Problem
 
 import logging
 
-# Configure logging
 logging.basicConfig(filename="address_book.log", filemode="a", level=logging.INFO,
                     format="%(asctime)s - %(levelname)s - %(message)s")
 
