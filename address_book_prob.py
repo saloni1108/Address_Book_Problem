@@ -44,24 +44,56 @@ class AddressBook:
         self.address_book.append(contact_1)
         logger.info("New Contact Added: %s", contact_1)
 
+    def edit_contact(self, first_name, last_name):
+        for contact in self.address_book:
+            if contact.first_name ==first_name and contact.last_name == last_name:
+                print("What detail would you like to edit?")
+                print("1. Address \n 2. City \n 3. State \n 4. Zip Code \n 5. Phone Number \n 6. Email")
+                choice = int(input("Enter your choice: "))
+                if choice == 1:
+                    contact.address = input("Enter new address: ")
+                elif choice == 2:
+                    contact.city = input("Enter new city: ")
+                elif choice == 3:
+                    contact.state = input("Enter new state: ")
+                elif choice == 4:
+                    contact.zip_code = input("Enter new zip code: ")
+                elif choice == 5:
+                    contact.phone_number = input("Enter new phone number: ")
+                elif choice == 6:
+                    contact.email = input("Enter new email: ")
+                else:
+                    print("Invalid choice")
+
+                logger.info("Contact edited: %s", contact)
+                return
+        print("Contact not found")
+
 
 def main():
         logger.info("Address Book Started...")
+        address_book = AddressBook()
+
         while True:
-            print("1. Add contact \n 2. Exit")
-            choice = int(input("Enter the choice: "))
+            print("1. Add contact")
+            print("2. Edit contact")
+            print("3. Exit")
+            choice = int(input("Enter your choice: "))
             try:
                 if choice == 1:
-                    address_book = AddressBook()
                     address_book.add_contact()
                 elif choice == 2:
-                    logging.info("Address Book Closed")
+                    first_name = input("Enter the first name of the contact: ")
+                    last_name = input("Enter the last name of the contact: ")
+                    address_book.edit_contact(first_name, last_name)
+                elif choice == 3:
+                    logger.info("Address Book Closed")
                     break
                 else:
-                    raise ValueError("Wrong input entered")
-            except ValueError as ve:
-                logging.error("Error occurred: " + str(ve))
+                    print("Invalid choice")
 
+            except Exception as e:
+                logger.error("An Error Occurred: %s", e)       
 
 if __name__ == "__main__":
     main()
