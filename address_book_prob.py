@@ -91,6 +91,11 @@ def main():
             try:
                 if choice == 1:
                     address_book.add_contact()
+                    add_another = input("Do you want to input another contact into your address book (yes / no): ")
+                    if add_another == 'no':
+                        return main()
+                    else:
+                        address_book.add_contact()
                 elif choice == 2:
                     first_name = input("Enter the first name of the contact: ")
                     last_name = input("Enter the last name of the contact: ")
