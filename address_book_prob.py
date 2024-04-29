@@ -80,38 +80,57 @@ class AddressBook:
 
 def main():
         logger.info("Address Book Started...")
-        address_book = AddressBook()
+        address_books = {}
 
         while True:
-            print("1. Add contact")
-            print("2. Edit contact")
-            print("3. Delete Contact")
-            print("4. Exit")
+            print("1. Create new Address Book")
+            print("2. Add contact")
+            print("3. Edit contact")
+            print("4. Delete Contact")
+            print("5. Exit")
             choice = int(input("Enter your choice: "))
             try:
                 if choice == 1:
-                    address_book.add_contact()
-                    add_another = input("Do you want to input another contact into your address book (yes / no): ")
-                    if add_another == 'no':
-                        return main()
-                    else:
-                        address_book.add_contact()
+                    address_book_name = input("Enter the name for the new address book: ")
+                    address_books[address_book_name] = AddressBook()
+                    print(f"Address book '{address_book_name}' created successfully.")
                 elif choice == 2:
-                    first_name = input("Enter the first name of the contact: ")
-                    last_name = input("Enter the last name of the contact: ")
-                    address_book.edit_contact(first_name, last_name)
-                elif choice ==3:
-                    first_name = input("Enter the first name of the contact: ")
-                    last_name = input("Enter the last name of the contact: ")
-                    address_book.delete_contact(first_name, last_name)
+                    address_book_name = input("Enter the name of the address book: ")
+                    if address_book_name in address_books:
+                        address_books[address_book_name].add_contact()
+                    else:
+                        print("Address book not found.")
+                elif choice == 3:
+                    address_book_name = input("Enter the name of the address book: ")
+                    if address_book_name in address_books:
+                        first_name = input("Enter the first name of the contact: ")
+                        last_name = input("Enter the last name of the contact: ")
+                        new_details = {}  # Add code to get new details from the user
+                        if address_books[address_book_name].edit_contact(first_name, last_name, new_details):
+                            print("Contact edited successfully.")
+                        else:
+                            print("Contact not found.")
+                    else:
+                        print("Address book not found.")
                 elif choice == 4:
+                    address_book_name = input("Enter the name of the address book: ")
+                    if address_book_name in address_books:
+                        first_name = input("Enter the first name of the contact: ")
+                        last_name = input("Enter the last name of the contact: ")
+                        if address_books[address_book_name].delete_contact(first_name, last_name):
+                            print("Contact deleted successfully.")
+                        else:
+                            print("Contact not found.")
+                    else:
+                        print("Address book not found.")
+                elif choice == 5:
                     logger.info("Address Book Closed")
                     break
                 else:
                     print("Invalid choice")
 
             except Exception as e:
-                logger.error("An Error Occurred: %s", e)       
+                logger.error("An Error Occurred: %s", e)
 
 if __name__ == "__main__":
     main()
