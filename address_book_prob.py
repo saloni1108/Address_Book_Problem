@@ -153,10 +153,6 @@ def main():
                         found_contacts.extend(address_book.search_by_state(state))
                     if found_contacts:
                         print("Search results:")
-                    for contact in found_contacts:
-                        print(contact)
-                    else:
-                        print("No contacts found in the specified city or state.")    
                 elif choice == 6:
                     logger.info("Address Book Closed")
                     break
