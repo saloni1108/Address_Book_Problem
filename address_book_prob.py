@@ -3,7 +3,7 @@ Address Book Problem...
 """
 
 import logging
-import csv
+import json
 logging.basicConfig(filename="address_book.log", filemode="a", level=logging.INFO,
                     format="%(asctime)s - %(levelname)s - %(message)s")
 
@@ -123,33 +123,27 @@ class AddressBook:
     def sort_contacts_by_zip(self):
         self.address_book.sort(key=lambda contact: contact.zip_code)
 
-    def read_from_csv(self, filename):
+    def read_from_json(self, filename):
         try:
-            with open(filename, 'r', newline='') as file:
-                reader = csv.reader(file)
-                for row in reader:
-                    if len(row) == 8:
-                        first_name, last_name, address, city, state, zip_code, phone_number, email = row
-                        contact = Contact(first_name, last_name, address, city, state, zip_code, phone_number, email)
-                        self.address_book.append(contact)
-                    else:
-                        print("Invalid row in CSV file.")
-            print("Address book read from CSV file successfully.")
+            with open(filename, 'r') as file:
+                data = json.load(file)
+                for contact_info in data:
+                    contact = Contact(**contact_info)
+                    self.address_book.append(contact)
+            print("Address book read from JSON file successfully.")
         except FileNotFoundError:
             print("File not found.")
         except Exception as e:
-            print(f"An error occurred while reading from CSV file: {e}")
+            print(f"An error occurred while reading from JSON file: {e}")
 
-    def write_to_csv(self, filename):
+    def write_to_json(self, filename):
         try:
-            with open(filename, 'w', newline='') as file:
-                writer = csv.writer(file)
-                for contact in self.address_book:
-                    writer.writerow([contact.first_name, contact.last_name, contact.address, contact.city,
-                                     contact.state, contact.zip_code, contact.phone_number, contact.email])
-            print("Address book written to CSV file successfully.")
+            with open(filename, 'w') as file:
+                data = [contact.__dict__ for contact in self.address_book]
+                json.dump(data, file, indent=4)
+            print("Address book written to JSON file successfully.")
         except Exception as e:
-            print(f"An error occurred while writing to CSV file: {e}")
+            print(f"An error occurred while writing to JSON file: {e}")
 
 
 def main():
@@ -166,8 +160,8 @@ def main():
             print("7. Sort contacts by City")
             print("8. Sort contacts by State")
             print("9. Sort contacts by Zip")
-            print("10. Read from a csv file")
-            print("11. Write to a csv file")
+            print("10. Read from a json file")
+            print("11. Write to a json file")
             print("12. Exit")
             choice = int(input("Enter your choice: "))
             try:
@@ -255,14 +249,14 @@ def main():
                     address_book_name = input("Enter the name of the address book: ")
                     if address_book_name in address_books:
                         filename = input("Enter the filename to read from: ")
-                        address_books[address_book_name].read_from_csv(filename)
+                        address_books[address_book_name].read_from_json(filename)
                     else:
                         print("Address book not found.")
                 elif choice == 11:
                     address_book_name = input("Enter the name of the address book: ")
                     if address_book_name in address_books:
                         filename = input("Enter the filename to write to: ")
-                        address_books[address_book_name].write_to_csv(filename)
+                        address_books[address_book_name].write_to_json(filename)
                     else:
                         print("Address book not found.")
                 elif choice == 12:
