@@ -23,6 +23,9 @@ class Contact:
     
     def __str__(self):
         return f"Name: {self.first_name} {self.last_name} \n Address: {self.address}, {self.city}, {self.state}, {self.zip_code} \n Phone Number: {self.phone_number} \n E-mail: {self.email}"
+    
+    def __eq__(self, other):
+        return self.first_name == other.first_name and self.last_name == other.last_name
 
 class AddressBook:
     def __init__(self):
@@ -32,6 +35,9 @@ class AddressBook:
         logger.info("ADDRESS BOOK STARTED...")
         first_name = input("Enter the first name: ")
         last_name = input("Enter the last name: ")
+        if any(contact.first_name == first_name and contact.last_name == last_name for contact in self.address_book):
+            print("Duplicate entry! This contact already exists.")
+            return
         address = input("Enter the address: ")
         city = input("Enter the city of the following address: ")
         state = input("Enter the state: ")
