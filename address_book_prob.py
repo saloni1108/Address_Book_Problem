@@ -123,6 +123,31 @@ class AddressBook:
     def sort_contacts_by_zip(self):
         self.address_book.sort(key=lambda contact: contact.zip_code)
 
+    def read_from_file(self, filename):
+        try:
+            with open(filename, 'r') as file:
+                lines = file.readlines()
+                for line in lines:
+                    contact_info = line.strip().split(',')
+                    if len(contact_info) == 8:
+                        first_name, last_name, address, city, state, zip_code, phone_number, email = contact_info
+                        contact = Contact(first_name, last_name, address, city, state, zip_code, phone_number, email)
+                        self.address_book.append(contact)
+                    else:
+                        print("File not found")
+        except FileNotFoundError:
+            print("File not Found")
+    
+    def write_to_file(self, filename):
+        try:
+            with open(filename, 'w') as file:
+                for contact in self.address_book:
+                    file.write(f"{contact.first_name},{contact.last_name},{contact.address},{contact.city},{contact.state},{contact.zip_code},{contact.phone_number},{contact.email}\n")
+            print("Address book written to file successfully.")
+        except Exception as e:
+            print(f"An error occurred while writing to file: {e}")
+
+
 def main():
         logger.info("Address Book Started...")
         address_books = {}
@@ -137,7 +162,9 @@ def main():
             print("7. Sort contacts by City")
             print("8. Sort contacts by State")
             print("9. Sort contacts by Zip")
-            print("10. Exit")
+            print("10. Read from a file")
+            print("11. Write to a file")
+            print("12. Exit")
             choice = int(input("Enter your choice: "))
             try:
                 if choice == 1:
@@ -221,6 +248,21 @@ def main():
                     else:
                         print("Address book not found.")
                 elif choice == 10:
+                    address_book_name = input("Enter the name of the address book: ")
+                    if address_book_name in address_books:
+                        filename = input("Enter the filename to read/write: ")
+                        address_books[address_book_name].read_from_file(filename)
+                        print("Address book read from file successfully.")
+                    else:
+                        print("Address book not found.")
+                elif choice == 11:
+                    address_book_name = input("Enter the name of the address book: ")
+                    if address_book_name in address_books:
+                        filename = input("Enter the filename to read/write: ")
+                        address_books[address_book_name].write_to_file(filename)
+                    else:
+                        print("Address book not found.")
+                elif choice == 12:
                     logger.info("Address Book Closed")
                     break
                 else:
