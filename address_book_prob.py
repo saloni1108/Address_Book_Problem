@@ -97,6 +97,19 @@ class AddressBook:
                 results.append(contact)
         return results
 
+    def count_by_city(self, city):
+        count = 0
+        for contact in self.address_book:
+            if contact.city == city:
+                count += 1
+        return count
+    
+    def count_by_state(self, state):
+        count = 0
+        for contact in self.address_book:
+            if contact.state == state:
+                count+= 1
+        return count
 
 def main():
         logger.info("Address Book Started...")
@@ -148,15 +161,21 @@ def main():
                     city = input("Enter the city to search: ")
                     state = input("Enter the state to search: ")
                     found_contacts = []
+                    total_by_city = 0
+                    total_by_state = 0
                     for address_book_name, address_book in address_books.items():
                         found_contacts.extend(address_book.search_by_city(city))
                         found_contacts.extend(address_book.search_by_state(state))
+                        total_by_city += address_book.count_by_city(city)
+                        total_by_state += address_book.count_by_state(state)
                     if found_contacts:
                         print("Search results:")
-                    for contact in found_contacts:
-                        print(contact)
+                        for contact in found_contacts:
+                            print(contact)
+                        print(f"Total contacts in {city}: {total_by_city}")
+                        print(f"Total contacts in {state}: {total_by_state}")
                     else:
-                        print("No contacts found in the specified city or state.")    
+                        print("No contacts found in the specified city or state.")     
                 elif choice == 6:
                     logger.info("Address Book Closed")
                     break
