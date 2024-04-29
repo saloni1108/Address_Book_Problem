@@ -82,6 +82,20 @@ class AddressBook:
                 print("Contact deleted successfully")
                 return
         print("Contact not found")
+    
+    def search_by_city(self, city):
+        results = []
+        for contact in self.address_book:
+            if contact.city == city:
+                results.append(contact)
+        return results
+    
+    def search_by_state(self, state):
+        results = []
+        for contact in self.address_book:
+            if contact.state == state:
+                results.append(contact)
+        return results
 
 
 def main():
@@ -93,7 +107,8 @@ def main():
             print("2. Add contact")
             print("3. Edit contact")
             print("4. Delete Contact")
-            print("5. Exit")
+            print("5. Search a person by city or state.")
+            print("6. Exit")
             choice = int(input("Enter your choice: "))
             try:
                 if choice == 1:
@@ -129,7 +144,20 @@ def main():
                             print("Contact not found.")
                     else:
                         print("Address book not found.")
-                elif choice == 5:
+                elif choice ==5:
+                    city = input("Enter the city to search: ")
+                    state = input("Enter the state to search: ")
+                    found_contacts = []
+                    for address_book_name, address_book in address_books.items():
+                        found_contacts.extend(address_book.search_by_city(city))
+                        found_contacts.extend(address_book.search_by_state(state))
+                    if found_contacts:
+                        print("Search results:")
+                    for contact in found_contacts:
+                        print(contact)
+                    else:
+                        print("No contacts found in the specified city or state.")    
+                elif choice == 6:
                     logger.info("Address Book Closed")
                     break
                 else:
