@@ -113,6 +113,15 @@ class AddressBook:
 
     def sort_contacts_by_name(self):
         self.address_book.sort(key=lambda contact: (contact.last_name, contact.first_name))
+    
+    def sort_contacts_by_city(self):
+        self.address_book.sort(key=lambda contact: contact.city)
+
+    def sort_contacts_by_state(self):
+        self.address_book.sort(key=lambda contact: contact.state)
+
+    def sort_contacts_by_zip(self):
+        self.address_book.sort(key=lambda contact: contact.zip_code)
 
 def main():
         logger.info("Address Book Started...")
@@ -125,7 +134,10 @@ def main():
             print("4. Delete Contact")
             print("5. Search a person by city or state.")
             print("6. Sort contacts by Name")
-            print("7. Exit")
+            print("7. Sort contacts by City")
+            print("8. Sort contacts by State")
+            print("9. Sort contacts by Zip")
+            print("10. Exit")
             choice = int(input("Enter your choice: "))
             try:
                 if choice == 1:
@@ -188,6 +200,27 @@ def main():
                     else:
                         print("Address book not found.")
                 elif choice == 7:
+                    address_book_name = input("Enter the name of the address book: ")
+                    if address_book_name in address_books:
+                        address_books[address_book_name].sort_contacts_by_city()
+                        print("Contacts sorted by city.")
+                    else:
+                        print("Address book not found.")
+                elif choice == 8:
+                    address_book_name = input("Enter the name of the address book: ")
+                    if address_book_name in address_books:
+                        address_books[address_book_name].sort_contacts_by_state()
+                        print("Contacts sorted by state.")
+                    else:
+                        print("Address book not found.")
+                elif choice == 9:
+                    address_book_name = input("Enter the name of the address book: ")
+                    if address_book_name in address_books:
+                        address_books[address_book_name].sort_contacts_by_zip()
+                        print("Contacts sorted by zip code.")
+                    else:
+                        print("Address book not found.")
+                elif choice == 10:
                     logger.info("Address Book Closed")
                     break
                 else:
