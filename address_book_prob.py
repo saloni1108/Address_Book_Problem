@@ -111,6 +111,9 @@ class AddressBook:
                 count+= 1
         return count
 
+    def sort_contacts_by_name(self):
+        self.address_book.sort(key=lambda contact: (contact.last_name, contact.first_name))
+
 def main():
         logger.info("Address Book Started...")
         address_books = {}
@@ -121,7 +124,8 @@ def main():
             print("3. Edit contact")
             print("4. Delete Contact")
             print("5. Search a person by city or state.")
-            print("6. Exit")
+            print("6. Sort contacts by Name")
+            print("7. Exit")
             choice = int(input("Enter your choice: "))
             try:
                 if choice == 1:
@@ -177,6 +181,13 @@ def main():
                     else:
                         print("No contacts found in the specified city or state.")     
                 elif choice == 6:
+                    address_book_name = input("ENter the name of the address book: ")
+                    if address_book_name in address_books:
+                        address_books[address_book_name].sort_contacts_by_name()
+                        print("Contacts sorted by name.")
+                    else:
+                        print("Address book not found.")
+                elif choice == 7:
                     logger.info("Address Book Closed")
                     break
                 else:
