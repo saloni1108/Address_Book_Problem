@@ -27,6 +27,7 @@ class Contact:
 
     def __init__(self, first_name, last_name, address, city, state, zip_code, phone_number, email):
         """
+        Function:
         Constructs all the necessary attributes for the contact object.
 
         Parameters:
@@ -38,6 +39,8 @@ class Contact:
         zip_code (str): Zip code of the contact.
         phone_number (str): Phone number of the contact.
         email (str): Email address of the contact.
+
+        Returns: None
         """
 
         self.first_name = first_name
@@ -58,7 +61,7 @@ class Contact:
     
     def __eq__(self, other):
         """
-        Checks if two contact objects are equal based on their first and last names.
+        Function: Checks if two contact objects are equal based on their first and last names.
 
         Parameters:
         other (Contact): The other contact to compare with.
@@ -86,7 +89,11 @@ class AddressBook:
 
     def add_contact(self): 
         """
-        Adds a new contact to the address book.
+        Function: Adds a new contact to the address book.
+
+        Parameter: None
+
+        Returns: None
         """
 
         logger.info("ADDRESS BOOK STARTED...")
@@ -108,11 +115,13 @@ class AddressBook:
 
     def edit_contact(self, first_name, last_name):
         """
-        Edits the details of an existing contact in the address book.
+        Function: Edits the details of an existing contact in the address book.
 
         Parameters:
         first_name (str): First name of the contact to edit.
         last_name (str): Last name of the contact to edit.
+        
+        Returns: None
         """
 
         for contact in self.address_book:
@@ -141,11 +150,13 @@ class AddressBook:
 
     def delete_contact(self, first_name, last_name):
         """
-        Deletes a contact from the address book.
+        Function: Deletes a contact from the address book.
 
         Parameters:
         first_name (str): First name of the contact to delete.
         last_name (str): Last name of the contact to delete.
+
+        Returns: None
         """
 
         for contact in self.address_book:
@@ -158,7 +169,7 @@ class AddressBook:
     
     def search_by_city(self, city):
         """
-        Searches for contacts in a specific city.
+        Function: Searches for contacts in a specific city.
 
         Parameters:
         city (str): The city to search for contacts.
@@ -175,7 +186,7 @@ class AddressBook:
     
     def search_by_state(self, state):
         """
-        Searches for contacts in a specific state.
+        Function: Searches for contacts in a specific state.
 
         Parameters:
         state (str): The state to search for contacts.
@@ -192,7 +203,7 @@ class AddressBook:
 
     def count_by_city(self, city):
         """
-        Counts the number of contacts in a specific city.
+        Function: Counts the number of contacts in a specific city.
 
         Parameters:
         city (str): The city to count contacts in.
@@ -209,7 +220,7 @@ class AddressBook:
     
     def count_by_state(self, state):
         """
-        Counts the number of contacts in a specific state.
+        Function: Counts the number of contacts in a specific state.
 
         Parameters:
         state (str): The state to count contacts in.
@@ -226,38 +237,56 @@ class AddressBook:
 
     def sort_contacts_by_name(self):
         """
-        Sorts the contacts in the address book by name (last name, then first name).
+        Function: Sorts the contacts in the address book by name (last name, then first name).
+
+        Parameters: None
+
+        Returns: None
         """
 
         self.address_book.sort(key=lambda contact: (contact.last_name, contact.first_name))
     
     def sort_contacts_by_city(self):
         """
-        Sorts the contacts in the address book by city.
+        Function: Sorts the contacts in the address book by city.
+
+        Parameters: None
+
+        Returns: None
         """
 
         self.address_book.sort(key=lambda contact: contact.city)
 
     def sort_contacts_by_state(self):
         """
-        Sorts the contacts in the address book by state.
+        Function: Sorts the contacts in the address book by state.
+        
+        Parameters: None
+
+        Returns: None
         """
 
         self.address_book.sort(key=lambda contact: contact.state)
 
     def sort_contacts_by_zip(self):
         """
-        Sorts the contacts in the address book by zip code.
+        Function: Sorts the contacts in the address book by zip code.
+        
+        Parameters: None
+
+        Returns: None
         """
 
         self.address_book.sort(key=lambda contact: contact.zip_code)
 
     def read_from_json(self, filename):
         """
-        Reads the address book from a JSON file.
+        Function: Reads the address book from a JSON file.
 
         Parameters:
         filename (str): The name of the JSON file to read from.
+        
+        Returns: None
         """
 
         try:
@@ -274,10 +303,12 @@ class AddressBook:
 
     def write_to_json(self, filename):
         """
-        Writes the address book to a JSON file.
+        Function: Writes the address book to a JSON file.
 
         Parameters:
         filename (str): The name of the JSON file to write to.
+        
+        Returns: None
         """
 
         try:
